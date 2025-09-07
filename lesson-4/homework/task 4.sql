@@ -51,6 +51,58 @@ SELECT * FROM Employees
 WHERE Price <= 1000 AND StockQuantity > 50
 ORDER BY StockQuantity ASC
 --17--
+--17--
+CREATE TABLE Products (ProductID INT PRIMARY KEY, ProductName VARCHAR(40), CategoryID INT,Price DECIMAL(10,2), Category Varchar(40))
+SELECT * FROM Products
+WHERE ProductName LIKE '%e%'
+--18--
+CREATE TABLE Employees (EmpID INT PRIMARY KEY, FirstName VARCHAR(40),LastName VARCHAR(40),DepartmentName VARCHAR(40), Age INT, Salary DECIMAL(10,2))
+ALter table Employees
+ADD  Department Varchar(45)
+SELECT * FROM Employees
+WHERE Department in ('HR', 'IT', 'Finance')
+--19--
+ALter table Employees
+ADD  City Varchar(45), PostalCode int 
+SELECT * FROM Customers
+ORDER BY City ASC, Postalcode DESC
+
+--20--
+SELECT TOP (5) *
+FROM Products
+ORDER BY SaleAmount DESC
+--21--
+SELECT FirstName + ' ' + LastName AS FullName
+FROM Employees
+--22--
+SELECT DISTINCT Category, ProductName, Price
+FROM Products
+WHERE Price > 50
+--23--
+SELECT *
+FROM Products
+WHERE Price < 0.10 * (SELECT AVG(Price) FROM Products);
+--24--
+SELECT * FROM Employees
+WHERE Age < 30 and department in  ('HR', 'IT')
+--25--
+SELECT * FROM Customers
+WHERE Email LIKE '%@gmail.com%'
+--26--
+SELECT employee_name, salary
+FROM Employees
+WHERE salary > ALL (SELECT salary FROM Employees WHERE department = 'Sales')
+
+--27-- 
+SELECT *
+FROM Orders
+WHERE OrderDate BETWEEN DATEADD(day, -180, (SELECT MAX(OrderDate) FROM Orders)) AND (SELECT MAX(OrderDate) FROM Orders)
+
+
+
+
+
+
 
 
 

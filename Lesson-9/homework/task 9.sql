@@ -509,6 +509,110 @@ FROM Orders AS o INNER JOIN Products AS p ON o.ProductID = p.ProductID
 WHERE p.Price > 100
 
 --11--
+SELECT e.[Name] AS EmployeeName, d.DepartmentName
+FROM Employees e
+CROSS JOIN Departments d
+WHERE e.DepartmentID <> d.DepartmentID
+
+--12--
+SELECT o.Quantity, p.StockQuantity 
+FROM Orders as o JOIN Products p ON o.ProductID = p.ProductID
+WHERE o.Quantity > p.StockQuantity
+
+--13--
+--SELECT * FROM Customers, Sales
+SELECT c.CustomerID, ProductID
+FROM Customers AS c JOIN Sales AS s ON c.CustomerID = s.CustomerID
+WHERE S.SaleAmount >= 500
+
+--14--
+SELECT s.[Name] AS StudentName, c.CourseName
+FROM Students AS s
+JOIN Enrollments AS e 
+    ON s.StudentID = e.StudentID
+JOIN Courses AS c 
+    ON e.CourseID = c.CourseID
+
+--15--
+SELECT p.ProductName, s.SupplierName 
+FROM Products p JOIN Suppliers s ON p.SupplierID = s.SupplierID
+WHERE SupplierName LIKE '%Tech%'
+
+--16--
+SELECT o.OrderID
+FROM Orders o JOIN Payments p ON o.OrderID = p.OrderID
+WHERE p.Amount < o.TotalAmount
+
+--17--
+SELECT e.[Name] AS EmployeeName, d.DepartmentName
+FROM Employees e
+JOIN Departments d
+  ON e.DepartmentID = d.DepartmentID
+
+--18--
+SELECT p.ProductName, c.CategoryName
+FROM Products p
+JOIN Categories c
+  ON p.ProductID = c.CategoryID
+WHERE CategoryName = 'Electronics' or CategoryName = 'Furniture'
+
+--19--
+
+SELECT s.SaleID, s.ProductID, s.SaleAmount, c.CustomerID, c.Country
+FROM Sales s
+JOIN Customers c
+  ON s.CustomerID = c.CustomerID
+WHERE c.Country = 'USA'
+
+--20--
+SELECT o.OrderID, c.CustomerID, c.Country, o.TotalAmount
+FROM Orders AS o JOIN Customers AS c ON o.CustomerID = c.CustomerID
+WHERE c.Country = 'Germany' AND o.TotalAmount > 100
+
+--21-- 
+SELECT e1.[Name] AS Employee1, e2.[Name] AS Employee2
+FROM Employees e1
+JOIN Employees e2 
+    ON e1.EmployeeID < e2.EmployeeID  
+   AND e1.DepartmentID <> e2.DepartmentID
+
+--22--
+SELECT pmt.PaymentID, o.OrderID, pr.ProductName,
+       o.Quantity, pr.Price, pmt.Amount AS PaidAmount,
+       (o.Quantity * pr.Price) AS ExpectedAmount
+FROM Payments pmt
+JOIN Orders o 
+    ON pmt.OrderID = o.OrderID
+JOIN Products pr 
+    ON o.ProductID = pr.ProductID
+WHERE pmt.Amount <> (o.Quantity * pr.Price);
+
+--23--
+SELECT s.[Name] 
+FROM Students AS s JOIN Enrollments AS e ON S.StudentID = E.StudentID
+WHERE E.StudentID IS NULL
+
+--24--
+SELECT m.EmployeeID AS ManagerID, m.[Name] AS ManagerName, m.Salary AS ManagerSalary,
+       e.EmployeeID AS EmployeeID, e.[Name] AS EmployeeName, e.Salary AS EmployeeSalary
+FROM Employees e
+JOIN Employees m
+    ON e.ManagerID = m.EmployeeID  
+WHERE m.Salary <= e.Salary
+
+--25--
+SELECT DISTINCT c.CustomerID, c.Name
+FROM Customers c
+JOIN Orders o 
+    ON c.CustomerID = o.CustomerID
+LEFT JOIN Payments p 
+    ON o.OrderID = p.OrderID
+WHERE p.PaymentID IS NULL;
+
+
+
+
+
 
 
 

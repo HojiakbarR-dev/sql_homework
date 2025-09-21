@@ -545,9 +545,6 @@ FROM Orders O JOIN Customers C ON O.CustomerID = C.CustomerID
 WHERE O.OrderDate >= '2022-01-01' AND O.OrderDate < '2023-01-01'
 
 --16--
-select * from Employees
-select * from Departments
-
 SELECT E.[Name],
 	   E.Salary,
 	   D.DepartmentName
@@ -578,8 +575,6 @@ FROM Orders o LEFT JOIN Payments p ON o.OrderID = p.OrderID
 WHERE O.OrderDate < '2020-01-01' AND P.OrderID IS NULL
 
 --21--
-SELECT * FROM Products
-SELECT * FROM Categories
 SELECT 
     P.ProductID, 
     P.ProductName
@@ -589,6 +584,45 @@ LEFT JOIN Categories C
 WHERE C.CategoryID IS NULL
 
 --22--
+SELECT e1.[Name] AS Employee1,
+	   E2.[Name] AS Employee2,
+	   E1.ManagerID AS ManagerID,
+	   e1.Salary AS Salary1,
+	   e2.Salary AS Salary2
+FROM Employees e1 JOIN Employees e2 ON e1.ManagerID = e2.ManagerID
+					AND e1.EmployeeID <> e2.EmployeeID
+WHERE e1.Salary > 60000 AND e2.Salary > 60000
+
+--23--
+SELECT E.[Name], D.DepartmentName
+FROM Employees E JOIN Departments D ON E.DepartmentID = D.DepartmentID
+WHERE E.[Name] LIKE 'M%'
+
+--24--
+SELECT S.SaleID,
+	   P.ProductName,
+	   S.SaleAmount
+FROM Products P JOIN Sales S ON P.ProductID = S.ProductID
+WHERE S.SaleAmount > 500
+
+--25--
+SELECT S.StudentID,S.[Name]
+FROM Students S LEFT JOIN Enrollments E ON S.StudentID = E.StudentID
+				LEFT JOIN Courses C ON C.CourseID = E.CourseID
+WHERE C.CourseID IS NULL
+
+--26--
+SELECT O.OrderID, 
+	   O.OrderDate, 
+	   P.PaymentID
+FROM Orders O LEFT JOIN Payments P ON O.OrderID = P.OrderID
+WHERE P.PaymentID IS NULL
+
+--27--
+SELECT P.ProductID, P.ProductName, C.CategoryName
+FROM Products P JOIN Categories C 
+    ON P.CategoryID = C.CategoryID
+WHERE C.CategoryName IN ('Electronics', 'Furniture');
 
 
 

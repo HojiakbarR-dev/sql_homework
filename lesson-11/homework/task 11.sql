@@ -601,7 +601,7 @@ JOIN Departments D ON E.DepartmentID = D.DepartmentID
 WHERE D.DepartmentName IN ('HR', 'Finance')
    OR E.Name LIKE '%a%e%i%o%'
 --19--
-SELECT E.EmployeeName,
+SELECT E.Name,
        D.DepartmentName,
        E.Salary
 FROM Employees E

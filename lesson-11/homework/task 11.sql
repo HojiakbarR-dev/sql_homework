@@ -548,4 +548,68 @@ WHERE D.DepartmentName = 'Human Resources' AND  E.Salary > 60000
 SELECT * FROM Departments
 
 --12--
+SELECT P.ProductName,
+	   S.SaleDate,
+	   P.StockQuantity
+FROM Products P JOIN SALES	S ON P.ProductID = S.ProductID
+WHERE S.SaleDate BETWEEN '2023-01-01' AND'2023-12-31' AND P.StockQuantity > 100
+
+--13--
+SELECT E.[Name] AS EmployeeName,
+	   D.DepartmentName,
+	   E.HireDate
+FROM Employees E JOIN Departments D ON E.DepartmentID = D.DepartmentID
+WHERE (D.DepartmentName = 'Sales') OR (E.HireDate >= '2020-01-01')
+
+--14--
+SELECT C.FirstName + ' ' + C.LastName AS CustomerName,
+	   o.OrderID,
+	   c.Address,
+	   o.OrderDate
+FROM Customers C JOIN Orders O ON C.CustomerID = O.CustomerID
+WHERE C.Country = 'USA' AND C.[Address] LIKE '[0-9][0-9][0-9][0-9]%'
+
+--15--
+SELECT P.ProductName,
+	   P.Category AS Cateogry_electronics,
+	   S.SaleAmount
+FROM Products P JOIN Sales S ON P.ProductID = S.ProductID AND 
+							(P.Category = 1 OR S.SaleAmount > 350)
+
+--16--
+SELECT C.CategoryName,
+       COUNT(P.ProductID) AS ProductCount
+FROM Products P
+JOIN Categories C ON P.Category = C.CategoryID
+GROUP BY C.CategoryName
+
+--17--
+SELECT C.FirstName + ' ' + C.LastName AS CustomerName,
+       C.City,
+       O.OrderID,
+       O.TotalAmount
+FROM Customers C
+JOIN Orders O ON C.CustomerID = O.CustomerID
+WHERE C.City = 'Los Angeles'
+  AND O.TotalAmount > 300
+
+--18--
+SELECT E.Name,
+       D.DepartmentName
+FROM Employees E
+JOIN Departments D ON E.DepartmentID = D.DepartmentID
+WHERE D.DepartmentName IN ('HR', 'Finance')
+   OR E.Name LIKE '%a%e%i%o%'
+--19--
+SELECT E.EmployeeName,
+       D.DepartmentName,
+       E.Salary
+FROM Employees E
+JOIN Departments D ON E.DepartmentID = D.DepartmentID
+WHERE D.DepartmentName IN ('Sales', 'Marketing')
+  AND E.Salary > 60000
+
+
+
+
 
